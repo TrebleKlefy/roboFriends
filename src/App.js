@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import CardList from './CardList';
+import SearchBoxx from './searchBoxx';
+import {robot} from './robot';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+class App extends Component{
+    constructor(){
+        super();
+        this.state={
+            robot: robot,
+            searchfiled: ''
+        }
+
+    }
+
+//allows searching 
+    onSearchChange = (event)=>{
+        this.setState({searchfiled: event.target.value})
+       
+    }
+render(){
+    const filteredRobot = this.state.robot.filter(robot =>{
+        return robot.name.toLowerCase().includes(this.state.searchfiled.toLowerCase());
+    })
+
+    return(
+        <div className ='tc'>
+                   
+        <h1>RoboFriends</h1>
+    <SearchBoxx  searchChange ={this.onSearchChange} />
+    <CardList robot ={filteredRobot}/>
     </div>
-  );
+    );
 }
-
+}
 export default App;
